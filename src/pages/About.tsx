@@ -1,0 +1,87 @@
+import { motion } from 'motion/react';
+import Testimonials from '../components/Testimonials';
+
+export default function About() {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+      className="bg-surface"
+    >
+      {/* Hero Section */}
+      <section className="relative py-24 md:py-32 bg-surface-container-low overflow-hidden">
+        <div className="grain-overlay absolute inset-0 z-0"></div>
+        <div className="container mx-auto px-6 md:px-12 relative z-10">
+          <div className="max-w-3xl mx-auto text-center space-y-8">
+            <span className="inline-block px-4 py-1 bg-secondary-container text-on-secondary-container text-[10px] md:text-xs font-label tracking-[0.2em] uppercase rounded-full">
+              Our Story
+            </span>
+            <h1 className="font-headline text-5xl md:text-7xl text-primary font-bold tracking-tighter">
+              Crafting Wellness <br/> 
+              <span className="italic font-light text-secondary">Since 1994</span>
+            </h1>
+            <p className="text-on-surface-variant text-lg md:text-xl leading-relaxed">
+              Nelatalli Organics began in the fertile lands of Andhra Pradesh. Our mission has always been simple: to bring the purest, most effective botanical remedies and artisanal staples from the soil to the modern home.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Mission Section */}
+      <section className="py-20 md:py-32 container mx-auto px-6 md:px-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+          <div className="space-y-8">
+            <h2 className="font-headline text-4xl md:text-5xl text-primary font-bold">The Artisanal Process</h2>
+            <p className="text-on-surface-variant text-lg leading-relaxed">
+              Every product in our apothecary is slow-cooked, hand-poured, and ethically sourced. We believe that true wellness cannot be rushed. Our Ghee is clarified over a low flame for 12 hours, and our honey is harvested only when the bees have completed their natural cycle.
+            </p>
+            <div className="grid grid-cols-2 gap-8 pt-4">
+              <div>
+                <h4 className="font-headline text-3xl text-secondary font-bold">100%</h4>
+                <p className="text-sm font-label tracking-widest uppercase text-primary/70">Organic Ingredients</p>
+              </div>
+              <div>
+                <h4 className="font-headline text-3xl text-secondary font-bold">28+</h4>
+                <p className="text-sm font-label tracking-widest uppercase text-primary/70">Years of Heritage</p>
+              </div>
+            </div>
+          </div>
+          <div className="relative">
+            <div className="absolute -inset-4 bg-secondary-container/20 blur-3xl rounded-full opacity-50"></div>
+            <img 
+              src="https://picsum.photos/seed/process/800/1000" 
+              alt="Artisanal process" 
+              className="relative z-10 rounded-2xl editorial-shadow w-full h-[500px] object-cover"
+              referrerPolicy="no-referrer"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Values Section */}
+      <section className="py-20 bg-surface-container">
+        <div className="container mx-auto px-6 md:px-12">
+          <div className="text-center mb-16">
+            <h2 className="font-headline text-4xl md:text-5xl text-primary font-bold">Our Core Values</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            {[
+              { title: 'Sustainability', desc: 'We use 100% recyclable glass and minimal packaging to protect our earth.' },
+              { title: 'Ethical Sourcing', desc: 'We partner directly with small-scale farmers who share our commitment to purity.' },
+              { title: 'Transparency', desc: 'Every jar tells a story. We share exactly where our ingredients come from.' }
+            ].map((value) => (
+              <div key={value.title} className="text-center space-y-4">
+                <h3 className="font-headline text-2xl font-bold text-secondary">{value.title}</h3>
+                <p className="text-on-surface-variant leading-relaxed">{value.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <Testimonials />
+    </motion.div>
+  );
+}
