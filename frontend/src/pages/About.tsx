@@ -12,18 +12,22 @@ export default function About() {
       className="bg-surface"
     >
       {/* Hero Section */}
-      <section className="relative py-24 md:py-32 bg-surface-container-low overflow-hidden">
-        <div className="grain-overlay absolute inset-0 z-0"></div>
+      <section 
+        className="relative py-32 md:py-48 overflow-hidden bg-cover bg-center"
+        style={{ backgroundImage: "url('https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=2000')" }}
+      >
+        <div className="absolute inset-0 bg-neutral-900/60 z-0"></div>
+        <div className="grain-overlay absolute inset-0 z-0 opacity-40"></div>
         <div className="container mx-auto px-6 md:px-12 relative z-10">
-          <div className="max-w-3xl mx-auto text-center space-y-8">
-            <span className="inline-block px-4 py-1 bg-secondary-container text-on-secondary-container text-[10px] md:text-xs font-label tracking-[0.2em] uppercase rounded-full">
+          <div className="max-w-3xl mx-auto text-center space-y-8 text-white">
+            <span className="inline-block px-4 py-1 bg-white text-primary text-[10px] md:text-xs font-label tracking-[0.2em] uppercase rounded-full shadow-lg">
               Our Story
             </span>
-            <h1 className="font-headline text-5xl md:text-7xl text-primary font-bold tracking-tighter">
+            <h1 className="font-headline text-5xl md:text-7xl font-bold tracking-tighter text-white drop-shadow-lg">
               Pure & Healthy <br/> 
-              <span className="italic font-light text-secondary">Organic Living</span>
+              <span className="italic font-light text-secondary drop-shadow-md">Organic Living</span>
             </h1>
-            <p className="text-on-surface-variant text-lg md:text-xl leading-relaxed">
+            <p className="text-white/90 text-lg md:text-xl leading-relaxed drop-shadow-md font-medium">
               Nelatalli Organics is dedicated to bringing you the finest chemical-free products directly from the heart of our farms. We believe that true health starts with what you put on your plate.
             </p>
           </div>

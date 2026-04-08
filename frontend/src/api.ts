@@ -42,7 +42,9 @@ async function apiFetch<T>(endpoint: string, options: RequestInit = {}): Promise
 
   if (!res.ok) {
     const error = await res.json().catch(() => ({ detail: 'Network error' }));
-    throw new Error(error.detail || `API error: ${res.status}`);
+    const err = new Error(error.detail || `API error: ${res.status}`);
+    (err as any).status = res.status;
+    throw err;
   }
 
   return res.json();
@@ -114,6 +116,28 @@ export interface UserProfile {
   address: string;
   avatar: string;
   member_since: string;
+}
+
+export interface Address {
+  id: number;
+  title: string;
+  full_name: string;
+  street: string;
+  city: string;
+  state: string;
+  zip_code: string;
+  phone: string;
+  is_default: boolean;
+}
+
+export interface PaymentMethod {
+  id: number;
+  provider: string;
+  card_number_last4: string;
+  expiry_month: string;
+  expiry_year: string;
+  card_holder_name: string;
+  is_default: boolean;
 }
 
 export interface AuthResponse {
@@ -241,4 +265,26 @@ export const cartApi = {
     apiFetch<CartItem>(`/api/cart/${itemId}`, { method: 'PUT', body: JSON.stringify({ quantity }) }),
   remove: (itemId: number) =>
     apiFetch(`/api/cart/${itemId}`, { method: 'DELETE' }),
+};
+
+// ───────────────── Addresses API ─────────────────
+
+export const addressesApi = {
+  getAll: () => apiFetch<Address[]>('/api/users/addresses'),
+  add: (data: Partial<Address>) =>
+    apiFetch<Address>('/api/users/addresses', { method: 'POST', body: JSON.stringify(data) }),
+  update: (id: number, data: Partial<Address>) =>
+    apiFetch<Address>(`/api/users/addresses/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
+  remove: (id: number) =>
+    apiFetch(`/api/users/addresses/${id}`, { method: 'DELETE' }),
+};
+
+// ───────────────── Payment Methods API ─────────────────
+
+export const paymentMethodsApi = {
+  getAll: () => apiFetch<PaymentMethod[]>('/api/users/payment-methods'),
+  add: (data: Partial<PaymentMethod>) =>
+    apiFetch<PaymentMethod>('/api/users/payment-methods', { method: 'POST', body: JSON.stringify(data) }),
+  remove: (id: number) =>
+    apiFetch(`/api/users/payment-methods/${id}`, { method: 'DELETE' }),
 };

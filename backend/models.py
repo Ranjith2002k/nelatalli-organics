@@ -86,6 +86,40 @@ class User(Base):
     orders = relationship("Order", back_populates="user")
     wishlist_items = relationship("WishlistItem", back_populates="user")
     cart_items = relationship("CartItem", back_populates="user")
+    addresses = relationship("Address", back_populates="user")
+    payment_methods = relationship("PaymentMethod", back_populates="user")
+
+class Address(Base):
+    __tablename__ = "addresses"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    title = Column(String(100), default="Home")
+    full_name = Column(String(200), nullable=False)
+    street = Column(String(500), nullable=False)
+    city = Column(String(200), nullable=False)
+    state = Column(String(200), nullable=False)
+    zip_code = Column(String(50), nullable=False)
+    phone = Column(String(50), default="")
+    is_default = Column(Boolean, default=False)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+
+    user = relationship("User", back_populates="addresses")
+
+class PaymentMethod(Base):
+    __tablename__ = "payment_methods"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    provider = Column(String(100), nullable=False) # e.g., Visa, Mastercard
+    card_number_last4 = Column(String(4), nullable=False)
+    expiry_month = Column(String(2), nullable=False)
+    expiry_year = Column(String(4), nullable=False)
+    card_holder_name = Column(String(200), nullable=False)
+    is_default = Column(Boolean, default=False)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+
+    user = relationship("User", back_populates="payment_methods")
 
 
 class Order(Base):

@@ -111,10 +111,10 @@ class UserOut(BaseModel):
     id: int
     name: str
     email: str
-    phone: str
-    address: str
-    avatar: str
-    member_since: str
+    phone: Optional[str] = ""
+    address: Optional[str] = ""
+    avatar: Optional[str] = ""
+    member_since: Optional[str] = ""
 
     class Config:
         from_attributes = True
@@ -131,6 +131,67 @@ class TokenOut(BaseModel):
     access_token: str
     token_type: str = "bearer"
     user: UserOut
+
+
+# ──────────────────────────── Address ─────────────────────────────
+
+class AddressCreate(BaseModel):
+    title: str = "Home"
+    full_name: str
+    street: str
+    city: str
+    state: str
+    zip_code: str
+    phone: str = ""
+    is_default: bool = False
+
+class AddressUpdate(BaseModel):
+    title: Optional[str] = None
+    full_name: Optional[str] = None
+    street: Optional[str] = None
+    city: Optional[str] = None
+    state: Optional[str] = None
+    zip_code: Optional[str] = None
+    phone: Optional[str] = None
+    is_default: Optional[bool] = None
+
+class AddressOut(BaseModel):
+    id: int
+    title: str
+    full_name: str
+    street: str
+    city: str
+    state: str
+    zip_code: str
+    phone: str
+    is_default: bool
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+# ──────────────────────────── Payment Method ──────────────────────
+
+class PaymentMethodCreate(BaseModel):
+    provider: str
+    card_number_last4: str
+    expiry_month: str
+    expiry_year: str
+    card_holder_name: str
+    is_default: bool = False
+
+class PaymentMethodOut(BaseModel):
+    id: int
+    provider: str
+    card_number_last4: str
+    expiry_month: str
+    expiry_year: str
+    card_holder_name: str
+    is_default: bool
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
 
 
 # ──────────────────────────── Order ───────────────────────────────

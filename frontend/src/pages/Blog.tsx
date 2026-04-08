@@ -40,13 +40,19 @@ export default function Blog() {
       className="bg-surface"
     >
       {/* Hero Section */}
-      <section className="relative py-20 md:py-24 bg-surface-container-low overflow-hidden">
-        <div className="grain-overlay absolute inset-0 z-0"></div>
+      <section 
+        className="relative py-32 md:py-40 bg-cover bg-center overflow-hidden"
+        style={{ backgroundImage: "url('https://images.unsplash.com/photo-1466637574441-749b8f19452f?auto=format&fit=crop&q=80&w=2000')" }}
+      >
+        <div className="absolute inset-0 bg-neutral-900/60 z-0"></div>
+        <div className="grain-overlay absolute inset-0 z-0 opacity-40"></div>
         <div className="container mx-auto px-6 md:px-12 relative z-10 text-center">
-          <span className="text-xs font-label tracking-[0.4em] uppercase text-secondary font-bold">The Journal</span>
-          <h1 className="font-headline text-5xl md:text-7xl text-primary font-bold mt-4 tracking-tighter">
+          <span className="inline-block px-4 py-1 bg-white text-primary text-[10px] md:text-xs font-label tracking-[0.2em] uppercase rounded-full shadow-lg mb-6">
+            The Journal
+          </span>
+          <h1 className="font-headline text-5xl md:text-7xl text-white font-bold tracking-tighter drop-shadow-lg">
             Organic <br/> 
-            <span className="italic font-light text-secondary">Journal</span>
+            <span className="italic font-light text-secondary drop-shadow-md">Journal</span>
           </h1>
         </div>
       </section>

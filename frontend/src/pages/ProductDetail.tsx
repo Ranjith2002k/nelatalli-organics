@@ -1,15 +1,18 @@
 import { motion } from 'motion/react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ChevronRight, Heart, Share2, Facebook, Twitter, Mail, MessageCircle, Plus } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { productsApi, type Product } from '../api';
+import { productsApi, cartApi, wishlistApi, getAuthToken, type Product } from '../api';
 import { ALL_PRODUCTS } from '../constants';
 
 export default function ProductDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [product, setProduct] = useState<Product | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [addingToCart, setAddingToCart] = useState(false);
+  const [addingToWishlist, setAddingToWishlist] = useState(false);
 
   useEffect(() => {
     if (!id) return;
@@ -22,6 +25,42 @@ export default function ProductDetail() {
       })
       .finally(() => setLoading(false));
   }, [id]);
+
+  const handleAddToCart = async () => {
+    if (!product) return;
+    if (!getAuthToken()) {
+      alert("Please log in to add items to cart.");
+      navigate('/login');
+      return;
+    }
+    setAddingToCart(true);
+    try {
+      await cartApi.add(product.id, quantity);
+      alert('Product added to cart!');
+    } catch {
+      alert('Failed to add to cart.');
+    } finally {
+      setAddingToCart(false);
+    }
+  };
+
+  const handleAddToWishlist = async () => {
+    if (!product) return;
+    if (!getAuthToken()) {
+      alert("Please log in to add items to your wishlist.");
+      navigate('/login');
+      return;
+    }
+    setAddingToWishlist(true);
+    try {
+      await wishlistApi.add(product.id);
+      alert('Product added to wishlist!');
+    } catch {
+      alert('Failed to add to wishlist.');
+    } finally {
+      setAddingToWishlist(false);
+    }
+  };
 
   if (loading || !product) {
     return (
@@ -93,13 +132,21 @@ export default function ProductDetail() {
                   </button>
                 </div>
               </div>
-              <button className="bg-[#78b14b] text-white px-8 h-12 rounded font-bold hover:bg-[#6ba042] transition-colors">
-                Add to cart
+              <button 
+                onClick={handleAddToCart}
+                disabled={addingToCart}
+                className="bg-[#78b14b] text-white px-8 h-12 rounded font-bold hover:bg-[#6ba042] transition-colors disabled:opacity-50"
+              >
+                {addingToCart ? 'Adding...' : 'Add to cart'}
               </button>
             </div>
 
-            <button className="w-12 h-12 border border-gray-200 rounded flex items-center justify-center text-gray-400 hover:text-red-500 hover:border-red-500 transition-all">
-              <Heart size={20} />
+            <button 
+              onClick={handleAddToWishlist}
+              disabled={addingToWishlist}
+              className="w-12 h-12 border border-gray-200 rounded flex items-center justify-center text-gray-400 hover:text-red-500 hover:border-red-500 transition-all disabled:opacity-50"
+            >
+              <Heart size={20} className={addingToWishlist ? 'animate-pulse text-red-500' : ''} />
             </button>
 
             <div className="pt-4 border-t border-gray-100">
@@ -138,7 +185,10 @@ export default function ProductDetail() {
         <button className="w-14 h-14 bg-blue-500 text-white rounded-full shadow-xl flex items-center justify-center hover:scale-110 transition-transform">
           <span className="material-symbols-outlined text-3xl">smart_toy</span>
         </button>
-        <button className="w-14 h-14 bg-[#25D366] text-white rounded-full shadow-xl flex items-center justify-center hover:scale-110 transition-transform">
+        <button 
+          onClick={() => window.open(`https://wa.me/919030414251?text=${encodeURIComponent(`Hello I want more information about ${product?.title}`)}`, '_blank')}
+          className="w-14 h-14 bg-[#25D366] text-white rounded-full shadow-xl flex items-center justify-center hover:scale-110 transition-transform cursor-pointer"
+        >
           <MessageCircle size={32} />
         </button>
       </div>

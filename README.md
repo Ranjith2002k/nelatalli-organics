@@ -36,8 +36,10 @@ nelatalli-organics/
 - **Product Detail** — Individual product pages with descriptions, ratings & social sharing
 - **Shopping Cart** — Add/remove items, update quantities
 - **Wishlist** — Save favorite products for later
-- **User Authentication** — JWT-based register & login
+- **User Authentication** — JWT-based register & login with email case-insensitivity
 - **User Profile** — View/edit profile, order history, store credits
+- **Address Management** — Add, edit, and select from multiple shipping addresses
+- **Integrated Checkout** — Seamless multi-step checkout with integrated address creation and selection
 - **Order Management** — Place orders from cart, track order status
 - **Blog** — Wellness articles & recipes
 - **Contact Form** — Submit inquiries directly
